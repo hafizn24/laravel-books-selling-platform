@@ -38,8 +38,8 @@ const mainNavItems: NavItem[] = [
         icon: BookCopy,
     },
     {
-        title: 'Book List',
-        href: '/',
+        title: 'Category',
+        href: '/category',
         icon: Layers,
     },
 ];
