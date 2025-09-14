@@ -29,7 +29,7 @@ const mainNavItems: NavItem[] = [
     },
     {
         title: 'Pending Approval',
-        href: '/books/pending-approval',
+        href: '/books/list/approval',
         icon: TableProperties,
     },
     {

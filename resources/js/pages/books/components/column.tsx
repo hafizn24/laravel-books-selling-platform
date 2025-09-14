@@ -4,7 +4,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
 import { router } from '@inertiajs/react';
 import { toast } from 'sonner';
-import { BookDetailModal } from "./approval-book-details";
+import { BookDetailModal } from "./details";
 
 export type Book = {
     bk_id: number;

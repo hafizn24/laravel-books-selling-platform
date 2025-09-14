@@ -36,7 +36,7 @@ class BookController extends Controller
                 'bk_updated_at' => Carbon::parse($book->bk_updated_at)->format('Y-m-d H:i:s'),
             ];
         });
-        return Inertia::render('books/pending-approval', [
+        return Inertia::render('books/list-approval', [
             'books' => $books,
         ]);
     }
