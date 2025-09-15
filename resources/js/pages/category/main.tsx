@@ -10,10 +10,16 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from "@/components/ui/textarea"
 import { useEffect } from 'react';
 import { toast } from 'sonner';
+import { DataTable } from '../../components/data-table';
+import { CategoryList, columns } from './components/column';
 
 export default function Category() {
-    const { props } = usePage<{ flash?: { success?: string } }>();
+    const { props } = usePage<{
+        flash?: { success?: string };
+        categoryList: CategoryList [];
+    }>();
     console.log(props);
+
     useEffect(() => {
         if (props.flash?.success) {
             toast.success(props.flash.success);
@@ -79,6 +85,7 @@ export default function Category() {
 
                     <div className="flex flex-col gap-4 rounded-xl border p-4 overflow-x-auto">
                         <h3 className="text-center font-bold text-center">Category List</h3>
+                        <DataTable columns={columns} data={props.categoryList} />
                     </div>
 
                 </div>

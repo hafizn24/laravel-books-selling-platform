@@ -31,10 +31,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::put('books/{book}/approve', [BookController::class, 'approve'])->name('books.approve');
         Route::put('books/{book}/reject', [BookController::class, 'reject'])->name('books.reject');
 
-        Route::get('category', function () {
-            return Inertia::render('category/main');
-        })->name('category');
-
+        Route::get('category', [CategoryController::class, 'list'])->name('category');
         Route::post('category', [CategoryController::class, 'createCategory'])->name('category.create');
     });
 });
