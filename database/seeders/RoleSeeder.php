@@ -6,36 +6,46 @@ use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class RoleSeeder extends Seeder
 {
     public function run(): void
     {
-        $adminRole = Role::create(['name' => 'admin']);
-        $sellerRole = Role::create(['name' => 'seller']);
+        $admin = Role::create(['name' => 'admin']);
+        $seller = Role::create(['name' => 'seller']);
 
+        Role::firstOrCreate(['name' => 'admin', 'guard_name' => 'web']);
+        Role::firstOrCreate(['name' => 'seller', 'guard_name' => 'web']);
+
+        // will change by time
         $permissions = [
-            'view_dashboard',
-            'create_register_book',
-            'view_pending_approval',
-            'view_book_list',
-            'create_category'
+            'dashboard',
+            'register.books',
+            'pending.approval',
+            'book.list',
+            'category'
         ];
 
-        foreach ($permissions as $permission) {
-            Permission::create(['name' => $permission]);
+        foreach ($permissions as $perm) {
+            Permission::create(['name' => $perm]);
         }
 
-        $adminRole->givePermissionTo(Permission::all());
+        $admin->givePermissionTo($permissions);
+        $seller->givePermissionTo([
+            'dashboard',
+            'register.books',
+            'book.list',
+        ]);
 
-        $sellerRole->givePermissionTo([
-            'view_dashboard',
-            'create_register_book',
-            'view_pending_approval'
+        $user = User::factory()->create([
+            'name' => 'Hafiz',
+            'email' => 'hafizn24@gmail.com',
+            'password' => Hash::make('admin123'),
         ]);
 
         if ($user = User::find(1)) {
-            $user->assignRole($adminRole);
+            $user->assignRole($admin);
         }
     }
 }

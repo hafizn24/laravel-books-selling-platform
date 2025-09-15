@@ -14,21 +14,29 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return Inertia::render('dashboard');
     })->name('dashboard');
 
-    Route::get('books', function () {
-        return Inertia::render('books/create');
-    })->name('books');
+    // Seller-only routes
+    Route::middleware(['role_or_permission:seller|admin'])->group(function () {
+        Route::get('books', function () {
+            return Inertia::render('books/create');
+        })->name('books');
 
-    Route::get('books/list', [BookController::class, 'list'])->name('books.list');
-    Route::get('books/pending-approval', [BookController::class, 'index'])->name('books.pending-approval');
-    Route::put('books/{book}/approve', [BookController::class, 'approve'])->name('books.approve');
-    Route::put('books/{book}/reject', [BookController::class, 'reject'])->name('books.reject');
-    Route::post('books', [BookController::class, 'store'])->name('books.store');
+        Route::post('books', [BookController::class, 'store'])->name('books.store');
+        Route::get('books/list', [BookController::class, 'list'])->name('books.list');
+    });
 
-    // In progress. update using controller later
-    Route::get('category', function () {
-        return Inertia::render('category/main');
-    })->name(name: 'category');
-    Route::post('category', [CategoryController::class, 'createCategory'])->name('category.create');
+    // Admin-only routes
+    Route::middleware(['role:admin'])->group(function () {
+        Route::post('books', [BookController::class, 'store'])->name('books.store');
+        Route::get('books/pending-approval', [BookController::class, 'index'])->name('books.pending-approval');
+        Route::put('books/{book}/approve', [BookController::class, 'approve'])->name('books.approve');
+        Route::put('books/{book}/reject', [BookController::class, 'reject'])->name('books.reject');
+
+        Route::get('category', function () {
+            return Inertia::render('category/main');
+        })->name('category');
+
+        Route::post('category', [CategoryController::class, 'createCategory'])->name('category.create');
+    });
 });
 
 require __DIR__ . '/settings.php';
