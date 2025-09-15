@@ -10,12 +10,12 @@ Route::get('/', function () {
 })->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('dashboard', function () {
-        return Inertia::render('dashboard');
-    })->name('dashboard');
 
-    // Seller-only routes
+    // All user routes
     Route::middleware(['role_or_permission:seller|admin'])->group(function () {
+        Route::get('dashboard', function () {
+            return Inertia::render('dashboard');
+        })->name('dashboard');
         Route::get('books', function () {
             return Inertia::render('books/create');
         })->name('books');

@@ -15,6 +15,7 @@ import { Link, usePage } from '@inertiajs/react';
 import { LayoutGrid, Menu, TableProperties, Book, BookCopy, Layers } from 'lucide-react';
 import AppLogo from './app-logo';
 import AppLogoIcon from './app-logo-icon';
+import { useAuthRoles } from '@/hooks/use-auth-user';
 
 const mainNavItems: NavItem[] = [
     {
@@ -44,6 +45,24 @@ const mainNavItems: NavItem[] = [
     },
 ];
 
+const sellerNavItems: NavItem[] = [
+    {
+        title: 'Dashboard',
+        href: dashboard(),
+        icon: LayoutGrid,
+    },
+    {
+        title: 'Register Books',
+        href: '/books',
+        icon: Book,
+    },
+    {
+        title: 'Book List',
+        href: '/books/list',
+        icon: BookCopy,
+    },
+]
+
 const rightNavItems: NavItem[] = [
     // {
     //     title: 'Repository',
@@ -67,6 +86,8 @@ export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
     const page = usePage<SharedData>();
     const { auth } = page.props;
     const getInitials = useInitials();
+
+    const { isAdmin, isSeller } = useAuthRoles();
     return (
         <>
             <div className="border-b border-sidebar-border/80">
@@ -86,15 +107,26 @@ export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
                                 </SheetHeader>
                                 <div className="flex h-full flex-1 flex-col space-y-4 p-4">
                                     <div className="flex h-full flex-col justify-between text-sm">
-                                        <div className="flex flex-col space-y-4">
-                                            {mainNavItems.map((item) => (
-                                                <Link key={item.title} href={item.href} className="flex items-center space-x-2 font-medium">
-                                                    {item.icon && <Icon iconNode={item.icon} className="h-5 w-5" />}
-                                                    <span>{item.title}</span>
-                                                </Link>
-                                            ))}
-                                        </div>
-
+                                        {isAdmin && (
+                                            <div className="flex flex-col space-y-4">
+                                                {mainNavItems.map((item) => (
+                                                    <Link key={item.title} href={item.href} className="flex items-center space-x-2 font-medium">
+                                                        {item.icon && <Icon iconNode={item.icon} className="h-5 w-5" />}
+                                                        <span>{item.title}</span>
+                                                    </Link>
+                                                ))}
+                                            </div>
+                                        )}
+                                        {isSeller && (
+                                            <div className="flex flex-col space-y-4">
+                                                {sellerNavItems.map((item) => (
+                                                    <Link key={item.title} href={item.href} className="flex items-center space-x-2 font-medium">
+                                                        {item.icon && <Icon iconNode={item.icon} className="h-5 w-5" />}
+                                                        <span>{item.title}</span>
+                                                    </Link>
+                                                ))}
+                                            </div>
+                                        )}
                                         <div className="flex flex-col space-y-4">
                                             {rightNavItems.map((item) => (
                                                 <a
@@ -122,26 +154,50 @@ export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
                     {/* Desktop Navigation */}
                     <div className="ml-6 hidden h-full items-center space-x-6 lg:flex">
                         <NavigationMenu className="flex h-full items-stretch">
-                            <NavigationMenuList className="flex h-full items-stretch space-x-2">
-                                {mainNavItems.map((item, index) => (
-                                    <NavigationMenuItem key={index} className="relative flex h-full items-center">
-                                        <Link
-                                            href={item.href}
-                                            className={cn(
-                                                navigationMenuTriggerStyle(),
-                                                page.url === (typeof item.href === 'string' ? item.href : item.href.url) && activeItemStyles,
-                                                'h-9 cursor-pointer px-3',
+                            {isAdmin && (
+                                <NavigationMenuList className="flex h-full items-stretch space-x-2">
+                                    {mainNavItems.map((item, index) => (
+                                        <NavigationMenuItem key={index} className="relative flex h-full items-center">
+                                            <Link
+                                                href={item.href}
+                                                className={cn(
+                                                    navigationMenuTriggerStyle(),
+                                                    page.url === (typeof item.href === 'string' ? item.href : item.href.url) && activeItemStyles,
+                                                    'h-9 cursor-pointer px-3',
+                                                )}
+                                            >
+                                                {item.icon && <Icon iconNode={item.icon} className="mr-2 h-4 w-4" />}
+                                                {item.title}
+                                            </Link>
+                                            {page.url === item.href && (
+                                                <div className="absolute bottom-0 left-0 h-0.5 w-full translate-y-px bg-black dark:bg-white"></div>
                                             )}
-                                        >
-                                            {item.icon && <Icon iconNode={item.icon} className="mr-2 h-4 w-4" />}
-                                            {item.title}
-                                        </Link>
-                                        {page.url === item.href && (
-                                            <div className="absolute bottom-0 left-0 h-0.5 w-full translate-y-px bg-black dark:bg-white"></div>
-                                        )}
-                                    </NavigationMenuItem>
-                                ))}
-                            </NavigationMenuList>
+                                        </NavigationMenuItem>
+                                    ))}
+                                </NavigationMenuList>
+                            )}
+                            {isSeller && (
+                                <NavigationMenuList className="flex h-full items-stretch space-x-2">
+                                    {sellerNavItems.map((item, index) => (
+                                        <NavigationMenuItem key={index} className="relative flex h-full items-center">
+                                            <Link
+                                                href={item.href}
+                                                className={cn(
+                                                    navigationMenuTriggerStyle(),
+                                                    page.url === (typeof item.href === 'string' ? item.href : item.href.url) && activeItemStyles,
+                                                    'h-9 cursor-pointer px-3',
+                                                )}
+                                            >
+                                                {item.icon && <Icon iconNode={item.icon} className="mr-2 h-4 w-4" />}
+                                                {item.title}
+                                            </Link>
+                                            {page.url === item.href && (
+                                                <div className="absolute bottom-0 left-0 h-0.5 w-full translate-y-px bg-black dark:bg-white"></div>
+                                            )}
+                                        </NavigationMenuItem>
+                                    ))}
+                                </NavigationMenuList>
+                            )}
                         </NavigationMenu>
                     </div>
 
