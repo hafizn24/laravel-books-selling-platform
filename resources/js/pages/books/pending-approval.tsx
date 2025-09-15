@@ -1,7 +1,7 @@
 import AppLayout from '@/layouts/app-layout';
 import { Head, usePage } from '@inertiajs/react';
 import { Book, pendingColumns } from "./components/column";
-import { DataTable } from '../../components/data-table';
+import { DataTable } from './components/data-table';
 
 export default function PendingApproval() {
     const { props } = usePage<{ books: Book[] }>();

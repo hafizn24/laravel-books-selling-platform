@@ -1,7 +1,7 @@
 import AppLayout from '@/layouts/app-layout';
 import { Head, usePage } from '@inertiajs/react';
 import { Book, columns } from "./components/column";
-import { DataTable } from '../../components/data-table';
+import { DataTable } from './components/data-table';
 
 export default function Approval() {
     const { props } = usePage<{ books: Book[] }>();

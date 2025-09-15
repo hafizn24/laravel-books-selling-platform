@@ -19,13 +19,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('books');
 
     Route::get('books/list', [BookController::class, 'list'])->name('books.list');
-    Route::get('books/list/approval', [BookController::class, 'index'])->name('books.list.approval');
+    Route::get('books/pending-approval', [BookController::class, 'index'])->name('books.pending-approval');
     Route::put('books/{book}/approve', [BookController::class, 'approve'])->name('books.approve');
     Route::put('books/{book}/reject', [BookController::class, 'reject'])->name('books.reject');
     Route::post('books', [BookController::class, 'store'])->name('books.store');
 
     // In progress. update using controller later
-    Route::get('category', [CategoryController::class, 'list'])->name('category');
+    Route::get('category', function () {
+        return Inertia::render('category/main');
+    })->name(name: 'category');
     Route::post('category', [CategoryController::class, 'createCategory'])->name('category.create');
 });
 
