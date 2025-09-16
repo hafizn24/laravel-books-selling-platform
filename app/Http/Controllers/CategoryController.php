@@ -21,10 +21,11 @@ class CategoryController extends Controller
 
     public function list(Request $request)
     {
-        $categoryList = Category::get()->map(function ($book) {
+        $categoryList = Category::get()->map(function ($category) {
             return [
-                'ct_title' => $book->ct_title,
-                'ct_description' => $book->ct_description,
+                'ct_id' => $category->ct_id,
+                'ct_title' => $category->ct_title,
+                'ct_description' => $category->ct_description,
             ];
         });
 
@@ -32,5 +33,11 @@ class CategoryController extends Controller
         return Inertia::render('category/main', [
             'categoryList' => $categoryList,
         ]);
+    }
+
+    public function delete(Category $category)
+    {
+        $category->delete();
+        return back();
     }
 }

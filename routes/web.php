@@ -32,6 +32,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         Route::get('category', [CategoryController::class, 'list'])->name('category');
         Route::post('category', [CategoryController::class, 'createCategory'])->name('category.create');
+        Route::delete('category/{category}', [CategoryController::class, 'delete'])->name('category.delete');
     });
 });
 
