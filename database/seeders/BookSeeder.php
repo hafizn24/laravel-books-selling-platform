@@ -9,7 +9,7 @@ class BookSeeder extends Seeder
 {
     public function run(): void
     {
-        Book::insert([
+        $books = [
             [
                 'bk_title' => 'The Laravel Handbook',
                 'bk_description' => 'A comprehensive guide to mastering Laravel.',
@@ -18,6 +18,7 @@ class BookSeeder extends Seeder
                 'bk_approval' => 'pending',
                 'bk_created_at' => now(),
                 'bk_updated_at' => now(),
+                'bk_image' => 'https://rickandmortyapi.com/api/character/avatar/1.jpeg',
             ],
             [
                 'bk_title' => 'React for Beginners',
@@ -27,6 +28,7 @@ class BookSeeder extends Seeder
                 'bk_approval' => 'reject',
                 'bk_created_at' => now(),
                 'bk_updated_at' => now(),
+                'bk_image' => 'https://rickandmortyapi.com/api/character/avatar/2.jpeg',
             ],
             [
                 'bk_title' => 'Docker Deep Dive',
@@ -36,7 +38,17 @@ class BookSeeder extends Seeder
                 'bk_approval' => 'approve',
                 'bk_created_at' => now(),
                 'bk_updated_at' => now(),
+                'bk_image' => 'https://rickandmortyapi.com/api/character/avatar/3.jpeg',
             ],
-        ]);
+        ];
+
+        foreach ($books as $data) {
+            $imageUrl = $data['bk_image'];
+            unset($data['bk_image']);
+
+            $book = Book::create($data);
+
+            $book->addMediaFromUrl($imageUrl)->toMediaCollection('covers');
+        }
     }
 }

@@ -14,6 +14,7 @@ export function BookDetailModal({ book }: { book: Book }) {
                         <DialogTitle>Book Details</DialogTitle>
                     </DialogHeader>
                     <div className="space-y-2 text-sm">
+                        <img src={book.bk_image} alt={book.bk_title} className="w-24 h-24 object-cover rounded" />
                         <p><strong>Title:</strong> {book.bk_title}</p>
                         <p><strong>Description:</strong> {book.bk_description}</p>
                         <p><strong>Price:</strong> RM {book.bk_price}</p>

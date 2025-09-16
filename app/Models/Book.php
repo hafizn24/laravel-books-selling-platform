@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Book extends Model
+class Book extends Model implements HasMedia
 {
+    use InteractsWithMedia;
     protected $primaryKey = 'bk_id';
 
     public const CREATED_AT = 'bk_created_at';
@@ -17,6 +20,7 @@ class Book extends Model
         'bk_price',
         'bk_stock',
         'bk_approval',
+        'bk_image',
     ];
 
 }

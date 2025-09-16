@@ -16,6 +16,7 @@ export type Book = {
     bk_stock: number;
     bk_approval: "pending" | "approval" | "cancel";
     bk_created_at: string;
+    bk_image?: string;
 };
 
 export const columns: ColumnDef<Book>[] = [

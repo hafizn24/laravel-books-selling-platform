@@ -15,7 +15,6 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 export default function Dashboard() {
     const { props } = usePage<{ flash?: { success?: string } }>();
-    console.log(props);
     useEffect(() => {
         if (props.flash?.success) {
             toast.success(props.flash.success);

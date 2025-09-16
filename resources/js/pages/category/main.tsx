@@ -18,7 +18,6 @@ export default function Category() {
         flash?: { success?: string };
         categoryList: CategoryList [];
     }>();
-    console.log(props);
 
     useEffect(() => {
         if (props.flash?.success) {
