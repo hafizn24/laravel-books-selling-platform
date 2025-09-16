@@ -1,6 +1,6 @@
 import AppLayout from '@/layouts/app-layout';
 
-import { Form, Head } from '@inertiajs/react';
+import { Form, Head, usePage } from '@inertiajs/react';
 import { LoaderCircle } from 'lucide-react';
 
 import InputError from '@/components/input-error';
@@ -9,8 +9,21 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from "@/components/ui/textarea"
 import { toast } from 'sonner';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+
+type Category = {
+    ct_id: number;
+    ct_title: string;
+};
+
+type PageProps = {
+    category: Category[];
+};
 
 export default function Create() {
+    const { props } = usePage<PageProps>();
+    const category = props?.category;
+
     return (
         <AppLayout>
             <Head title="Dashboard" />
@@ -41,6 +54,24 @@ export default function Create() {
                                     />
                                     <InputError message={errors.title} className="mt-2" />
                                 </div>
+
+                                <div className="grid gap-2">
+                                    <Label htmlFor="bk_ct_id">Category</Label>
+                                    <Select name="bk_ct_id" required>
+                                        <SelectTrigger className="w-full">
+                                            <SelectValue placeholder="Select a category" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            {category.map((i) => (
+                                                <SelectItem key={i.ct_id} value={String(i.ct_id)}>
+                                                    {i.ct_title}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                    <InputError message={errors.bk_ct_id} className="mt-2" />
+                                </div>
+
 
                                 <div className="grid gap-2">
                                     <Label htmlFor="bk_description">Description</Label>

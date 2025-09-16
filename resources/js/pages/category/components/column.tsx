@@ -17,8 +17,6 @@ export const columns: ColumnDef<CategoryList>[] = [
         id: "actions",
         cell: ({ row }) => {
             const category = row.original
-            console.log(row.original);
-
             return (
                 <Button
                     variant="destructive"
@@ -29,7 +27,6 @@ export const columns: ColumnDef<CategoryList>[] = [
                                 onError: () => toast.error(`Failed to delete "${category.ct_title}".`),
                             });
                         }
-
                     }}
                 >
                     <Trash2 />

@@ -20,8 +20,10 @@ class Book extends Model implements HasMedia
         'bk_price',
         'bk_stock',
         'bk_approval',
+        'bk_ct_id',
+        'bk_user_id',
     ];
-    
+
     public function user()
     {
         return $this->belongsTo(User::class, 'bk_user_id');

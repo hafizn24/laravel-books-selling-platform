@@ -6,9 +6,18 @@ use App\Models\Book;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Carbon\Carbon;
+use App\Models\Category;
 
 class BookController extends Controller
 {
+    public function create()
+    {
+        $category = Category::select('ct_id', 'ct_title')->get();
+
+        return Inertia::render('books/create', [
+            'category' => $category,
+        ]);
+    }
     public function store(Request $request)
     {
         $validate = $request->validate([
@@ -20,14 +29,17 @@ class BookController extends Controller
             'bk_ct_id' => 'required|exists:categories,ct_id',
         ]);
 
-        $store = Book::create($request->only([
-            'bk_title',
-            'bk_description',
-            'bk_price',
-            'bk_stock',
+        $store = Book::create([
+            'bk_title' => $request->bk_title,
+            'bk_description' => $request->bk_description,
+            'bk_price' => $request->bk_price,
+            'bk_stock' => $request->bk_stock,
             'bk_user_id' => auth()->id(),
             'bk_ct_id' => $request->bk_ct_id,
-        ]));
+            'bk_created_at' => now(),
+            'bk_updated_at' => now(),
+        ]);
+
 
         $store->addMediaFromRequest('bk_image')->toMediaCollection('covers');
         return redirect()->route('dashboard')->with('success', 'Book registered successfully!');

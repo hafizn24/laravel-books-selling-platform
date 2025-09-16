@@ -16,10 +16,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('dashboard', function () {
             return Inertia::render('dashboard');
         })->name('dashboard');
-        Route::get('books', function () {
-            return Inertia::render('books/create');
-        })->name('books');
 
+        Route::get('books', [BookController::class, 'create'])->name('books');
         Route::post('books', [BookController::class, 'store'])->name('books.store');
         Route::get('books/list', [BookController::class, 'list'])->name('books.list');
     });
