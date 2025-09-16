@@ -8,24 +8,24 @@ import { BookDetailModal } from "./approval-book-details";
 
 export type Book = {
     bk_id: number;
-    bk_user_id?: number | null;
-    bk_ct_id?: number | null;
+    name: string;
+    ct_title: string;
     bk_title: string;
     bk_description: string;
     bk_price: number;
     bk_stock: number;
     bk_approval: "pending" | "approval" | "cancel";
     bk_created_at: string;
-    bk_image?: string;
+    bk_image: string;
 };
 
 export const columns: ColumnDef<Book>[] = [
     { accessorKey: "bk_title", header: "Title" },
-    { accessorKey: "bk_ct_id", header: "Category" },
+    { accessorKey: "ct_title", header: "Category" },
     { accessorKey: "bk_description", header: "Description" },
     { accessorKey: "bk_price", header: "Price" },
     { accessorKey: "bk_stock", header: "Stock" },
-    { accessorKey: "bk_user_id", header: "Seller Name" },
+    { accessorKey: "name", header: "Seller Name" },
     { accessorKey: "bk_approval", header: "Approval Status" },
     { accessorKey: "bk_created_at", header: "Created" },
         {
@@ -50,10 +50,10 @@ export const columns: ColumnDef<Book>[] = [
 
 export const pendingColumns: ColumnDef<Book>[] = [
     { accessorKey: "bk_title", header: "Title" },
-    { accessorKey: "bk_ct_id", header: "Category" },
+    { accessorKey: "ct_title", header: "Category" },
     { accessorKey: "bk_price", header: "Price" },
     { accessorKey: "bk_stock", header: "Stock" },
-    { accessorKey: "bk_user_id", header: "Seller Name" },
+    { accessorKey: "name", header: "Seller Name" },
     { accessorKey: "bk_created_at", header: "Created" },
     {
         id: "actions",

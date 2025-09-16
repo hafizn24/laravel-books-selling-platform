@@ -49,6 +49,8 @@ class BookController extends Controller
                     'bk_created_at' => Carbon::parse($book->bk_created_at)->format('Y-m-d H:i:s'),
                     'bk_updated_at' => Carbon::parse($book->bk_updated_at)->format('Y-m-d H:i:s'),
                     'bk_image' => $book->getFirstMediaUrl('covers'),
+                    'name' => $book->user?->name,
+                    'ct_title' => $book->category?->ct_title,
                 ];
             });
         return Inertia::render('books/pending-approval', [
@@ -71,6 +73,8 @@ class BookController extends Controller
                     'bk_created_at' => Carbon::parse($book->bk_created_at)->format('Y-m-d H:i:s'),
                     'bk_updated_at' => Carbon::parse($book->bk_updated_at)->format('Y-m-d H:i:s'),
                     'bk_image' => $book->getFirstMediaUrl('covers'),
+                    'name' => $book->user?->name,
+                    'ct_title' => $book->category?->ct_title,
                 ];
             });
 
