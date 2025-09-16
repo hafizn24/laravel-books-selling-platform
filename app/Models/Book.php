@@ -21,5 +21,14 @@ class Book extends Model implements HasMedia
         'bk_stock',
         'bk_approval',
     ];
+    
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'bk_user_id');
+    }
 
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'bk_ct_id');
+    }
 }

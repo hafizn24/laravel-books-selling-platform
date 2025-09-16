@@ -17,6 +17,7 @@ class BookController extends Controller
             'bk_price' => 'required|numeric|min:0',
             'bk_stock' => 'required|integer|min:0',
             'bk_image' => 'required|image|max:2048',
+            'bk_ct_id' => 'required|exists:categories,ct_id',
         ]);
 
         $store = Book::create($request->only([
@@ -24,6 +25,8 @@ class BookController extends Controller
             'bk_description',
             'bk_price',
             'bk_stock',
+            'bk_user_id' => auth()->id(),
+            'bk_ct_id' => $request->bk_ct_id,
         ]));
 
         $store->addMediaFromRequest('bk_image')->toMediaCollection('covers');
@@ -32,19 +35,22 @@ class BookController extends Controller
 
     public function index()
     {
-        $books = Book::where('bk_approval', 'pending')->get()->map(function ($book) {
-            return [
-                'bk_id' => $book->bk_id,
-                'bk_title' => $book->bk_title,
-                'bk_description' => $book->bk_description,
-                'bk_price' => $book->bk_price,
-                'bk_stock' => $book->bk_stock,
-                'bk_approval' => $book->bk_approval,
-                'bk_created_at' => Carbon::parse($book->bk_created_at)->format('Y-m-d H:i:s'),
-                'bk_updated_at' => Carbon::parse($book->bk_updated_at)->format('Y-m-d H:i:s'),
-                'bk_image' => $book->getFirstMediaUrl('covers'),
-            ];
-        });
+        $books = Book::with(['user', 'category', 'media'])
+            ->where('bk_approval', 'pending')
+            ->get()
+            ->map(function ($book) {
+                return [
+                    'bk_id' => $book->bk_id,
+                    'bk_title' => $book->bk_title,
+                    'bk_description' => $book->bk_description,
+                    'bk_price' => $book->bk_price,
+                    'bk_stock' => $book->bk_stock,
+                    'bk_approval' => $book->bk_approval,
+                    'bk_created_at' => Carbon::parse($book->bk_created_at)->format('Y-m-d H:i:s'),
+                    'bk_updated_at' => Carbon::parse($book->bk_updated_at)->format('Y-m-d H:i:s'),
+                    'bk_image' => $book->getFirstMediaUrl('covers'),
+                ];
+            });
         return Inertia::render('books/pending-approval', [
             'books' => $books,
         ]);
@@ -52,19 +58,21 @@ class BookController extends Controller
 
     public function list()
     {
-        $books = Book::with('media')->get()->map(function ($book) {
-            return [
-                'bk_id' => $book->bk_id,
-                'bk_title' => $book->bk_title,
-                'bk_description' => $book->bk_description,
-                'bk_price' => $book->bk_price,
-                'bk_stock' => $book->bk_stock,
-                'bk_approval' => $book->bk_approval,
-                'bk_created_at' => Carbon::parse($book->bk_created_at)->format('Y-m-d H:i:s'),
-                'bk_updated_at' => Carbon::parse($book->bk_updated_at)->format('Y-m-d H:i:s'),
-                'bk_image' => $book->getFirstMediaUrl('covers'),
-            ];
-        });
+        $books = Book::with(['user', 'category', 'media'])
+            ->get()
+            ->map(function ($book) {
+                return [
+                    'bk_id' => $book->bk_id,
+                    'bk_title' => $book->bk_title,
+                    'bk_description' => $book->bk_description,
+                    'bk_price' => $book->bk_price,
+                    'bk_stock' => $book->bk_stock,
+                    'bk_approval' => $book->bk_approval,
+                    'bk_created_at' => Carbon::parse($book->bk_created_at)->format('Y-m-d H:i:s'),
+                    'bk_updated_at' => Carbon::parse($book->bk_updated_at)->format('Y-m-d H:i:s'),
+                    'bk_image' => $book->getFirstMediaUrl('covers'),
+                ];
+            });
 
 
         return Inertia::render('books/list', [

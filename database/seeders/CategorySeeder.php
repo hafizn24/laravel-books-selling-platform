@@ -11,12 +11,6 @@ class CategorySeeder extends Seeder
     {
         Category::insert([
             [
-                'ct_title' => 'Fiction',
-                'ct_description' => 'Stories, novels, and imaginative writing.',
-                'ct_created_at' => now(),
-                'ct_updated_at' => now(),
-            ],
-            [
                 'ct_title' => 'Science',
                 'ct_description' => 'Books about physics, biology, and discoveries.',
                 'ct_created_at' => now(),

@@ -8,7 +8,9 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('books', function (Blueprint $table) {
-            $table->id('bk_id'); // Custom primary key
+            $table->id('bk_id');
+            $table->unsignedBigInteger('bk_user_id')->nullable();
+            $table->unsignedBigInteger('bk_ct_id')->nullable();
             $table->string('bk_title');
             $table->text('bk_description')->nullable();
             $table->decimal('bk_price', 8, 2)->default(0);
@@ -16,6 +18,9 @@ return new class extends Migration {
             $table->string('bk_approval')->default('pending');
             $table->timestamp('bk_created_at')->nullable();
             $table->timestamp('bk_updated_at')->nullable();
+
+            $table->foreign('bk_user_id')->references('id')->on('users')->onDelete('set null');
+            $table->foreign('bk_ct_id')->references('ct_id')->on('categories')->onDelete('set null');
         });
     }
 

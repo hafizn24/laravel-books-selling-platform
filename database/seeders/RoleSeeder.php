@@ -38,19 +38,11 @@ class RoleSeeder extends Seeder
             'book.list',
         ]);
 
-        $hafiz = User::factory()->create([
-            'name' => 'Hafiz',
-            'email' => 'hafizn24@gmail.com',
-            'password' => Hash::make('admin123'),
-        ]);
-
         $anisha = User::factory()->create([
             'name' => 'Anisha',
             'email' => 'anishamansor@gmail.com',
             'password' => Hash::make('anisha123'),
         ]);
-
-        $hafiz->assignRole($admin);
-        $anisha->assignRole($seller);
+        $anisha->assignRole($seller);        
     }
 }
