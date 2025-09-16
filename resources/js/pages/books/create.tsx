@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from "@/components/ui/textarea"
+import { toast } from 'sonner';
 
 export default function Create() {
     return (
@@ -86,7 +87,24 @@ export default function Create() {
                                     />
                                     <InputError message={errors.stock} />
                                 </div>
-
+                                <div className="grid gap-2">
+                                    <Label htmlFor="bk_image">Book Cover</Label>
+                                    <Input
+                                        id="bk_image"
+                                        type="file"
+                                        name="bk_image"
+                                        accept="image/*"
+                                        required
+                                        onChange={(e) => {
+                                            const file = e.target.files?.[0];
+                                            if (file && file.size > 2 * 1024 * 1024) {
+                                                toast.error('File size exceeds 2MB. Please choose a smaller image.');
+                                                e.target.value = '';
+                                            }
+                                        }}
+                                    />
+                                    < InputError message={errors.bk_image} className="mt-2" />
+                                </div>
                                 <Button type="submit" className="mt-2" tabIndex={5}>
                                     {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
                                     Register Book

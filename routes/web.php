@@ -26,7 +26,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Admin-only routes
     Route::middleware(['role:admin'])->group(function () {
-        Route::post('books', [BookController::class, 'store'])->name('books.store');
         Route::get('books/pending-approval', [BookController::class, 'index'])->name('books.pending-approval');
         Route::put('books/{book}/approve', [BookController::class, 'approve'])->name('books.approve');
         Route::put('books/{book}/reject', [BookController::class, 'reject'])->name('books.reject');

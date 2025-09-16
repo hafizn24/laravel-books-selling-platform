@@ -19,8 +19,14 @@ class BookController extends Controller
             'bk_image' => 'required|image|max:2048',
         ]);
 
-        $book = Book::create($validate);
-        $book->addMediaFromRequest('bk_image')->toMediaCollection('covers');
+        $store = Book::create($request->only([
+            'bk_title',
+            'bk_description',
+            'bk_price',
+            'bk_stock',
+        ]));
+
+        $store->addMediaFromRequest('bk_image')->toMediaCollection('covers');
         return redirect()->route('dashboard')->with('success', 'Book registered successfully!');
     }
 

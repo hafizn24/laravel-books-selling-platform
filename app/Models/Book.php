@@ -20,7 +20,6 @@ class Book extends Model implements HasMedia
         'bk_price',
         'bk_stock',
         'bk_approval',
-        'bk_image',
     ];
 
 }
