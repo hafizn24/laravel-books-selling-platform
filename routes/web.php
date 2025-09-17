@@ -20,6 +20,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('books', [BookController::class, 'create'])->name('books');
         Route::post('books', [BookController::class, 'store'])->name('books.store');
         Route::get('books/list', [BookController::class, 'list'])->name('books.list');
+        Route::get('books/{book:slug}', [BookController::class, 'show']);
     });
 
     // Admin-only routes

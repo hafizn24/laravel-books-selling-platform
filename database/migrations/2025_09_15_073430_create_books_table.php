@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->string('bk_approval')->default('pending');
             $table->timestamp('bk_created_at')->nullable();
             $table->timestamp('bk_updated_at')->nullable();
+            $table->string('slug')->unique();
 
             $table->foreign('bk_user_id')->references('id')->on('users')->onDelete('set null');
             $table->foreign('bk_ct_id')->references('ct_id')->on('categories')->onDelete('set null');

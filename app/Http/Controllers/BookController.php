@@ -107,4 +107,15 @@ class BookController extends Controller
         $book->update(['bk_approval' => 'reject']);
         return back()->with('success', 'Request rejected.');
     }
+
+    public function show(Book $book)
+    {
+        return response()->json([
+            'title' => $book->bk_title,
+            'description' => $book->bk_description,
+            'price' => $book->bk_price,
+            'stock' => $book->bk_stock,
+            'slug' => $book->slug,
+        ]);
+    }
 }
