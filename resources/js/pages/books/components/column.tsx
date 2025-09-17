@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { ColumnDef } from "@tanstack/react-table";
-import { MoreHorizontal } from "lucide-react";
+import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { router } from '@inertiajs/react';
 import { toast } from 'sonner';
 import { BookDetailModal } from "./approval-book-details";
@@ -20,15 +20,34 @@ export type Book = {
 };
 
 export const columns: ColumnDef<Book>[] = [
-    { accessorKey: "bk_title", header: "Title" },
+    {
+        accessorKey: "bk_title",
+        header: "Title",
+        cell: ({ row }) => <div>{row.getValue("bk_title")}</div>,
+    },
     { accessorKey: "ct_title", header: "Category" },
     { accessorKey: "bk_description", header: "Description" },
     { accessorKey: "bk_price", header: "Price" },
     { accessorKey: "bk_stock", header: "Stock" },
     { accessorKey: "name", header: "Seller Name" },
     { accessorKey: "bk_approval", header: "Approval Status" },
-    { accessorKey: "bk_created_at", header: "Created" },
-        {
+    {
+        accessorKey: "bk_created_at",
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+            >
+                Created <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => {
+            const date = new Date(row.getValue("bk_created_at"));
+            return <div>{date.toLocaleString()}</div>;
+        },
+    }
+    ,
+    {
         id: "actions",
         cell: ({ row }) => {
             const book = row.original;
@@ -54,7 +73,21 @@ export const pendingColumns: ColumnDef<Book>[] = [
     { accessorKey: "bk_price", header: "Price" },
     { accessorKey: "bk_stock", header: "Stock" },
     { accessorKey: "name", header: "Seller Name" },
-    { accessorKey: "bk_created_at", header: "Created" },
+    {
+        accessorKey: "bk_created_at",
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+            >
+                Created <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => {
+            const date = new Date(row.getValue("bk_created_at"));
+            return <div>{date.toLocaleString()}</div>;
+        },
+    },
     {
         id: "actions",
         cell: ({ row }) => {
