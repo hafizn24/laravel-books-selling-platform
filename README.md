@@ -7,7 +7,6 @@ A robust and secure book selling platform built with Laravel, featuring role-bas
 ### Role-Based Access Control
 - **Admin:** Full platform management capabilities
 - **Seller:** Book management and sales tracking
-- **User:** Browse and purchase books
 
 ### Core Functionalities
 
@@ -23,12 +22,6 @@ A robust and secure book selling platform built with Laravel, featuring role-bas
 - Inventory tracking
 - Sales monitoring
 - Profile management
-
-#### For Users
-- Secure authentication
-- Browse books by category
-- View book details and seller information
-- Purchase books
 
 ### Technical Stack
 
