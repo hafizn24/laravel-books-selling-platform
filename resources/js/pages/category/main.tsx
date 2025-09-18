@@ -52,7 +52,6 @@ export default function Category() {
                                                 autoComplete="title"
                                                 name="ct_title"
                                                 placeholder="Book title"
-                                                value="Testing purpose"
                                             />
                                             <InputError message={errors.title} className="mt-2" />
                                         </div>
@@ -67,7 +66,6 @@ export default function Category() {
                                                 name="ct_description"
                                                 placeholder="Brief description of the book"
                                                 rows={4}
-                                                value="Testing purpose"
                                             />
                                             <InputError message={errors.description} />
                                         </div>

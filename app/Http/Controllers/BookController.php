@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Carbon\Carbon;
 use App\Models\Category;
+use Illuminate\Support\Facades\Auth;
 
 class BookController extends Controller
 {
@@ -72,8 +73,14 @@ class BookController extends Controller
 
     public function list()
     {
-        $books = Book::with(['user', 'category', 'media'])
-            ->get()
+        $user = Auth::user();
+        $query = Book::with(['user', 'category', 'media']);
+
+        if ($user->hasRole('seller')) {
+            $query->where('bk_user_id', $user->id);
+        }
+
+        $books = $query->get()
             ->map(function ($book) {
                 return [
                     'bk_id' => $book->bk_id,
@@ -81,7 +88,7 @@ class BookController extends Controller
                     'bk_description' => $book->bk_description,
                     'bk_price' => $book->bk_price,
                     'bk_stock' => $book->bk_stock,
-                    'bk_approval' => $book->bk_approval,
+                    'bk_approval' => ucfirst($book->bk_approval),
                     'bk_created_at' => Carbon::parse($book->bk_created_at)->format('Y-m-d H:i:s'),
                     'bk_updated_at' => Carbon::parse($book->bk_updated_at)->format('Y-m-d H:i:s'),
                     'bk_image' => $book->getFirstMediaUrl('covers'),
@@ -96,14 +103,16 @@ class BookController extends Controller
         ]);
     }
 
-    public function approve(Book $book)
+    public function approve($bk_id)
     {
+        $book = Book::where('bk_id', $bk_id)->firstOrFail();
         $book->update(['bk_approval' => 'approve']);
         return back()->with('success', 'Request approved.');
     }
 
-    public function reject(Book $book)
+    public function reject($bk_id)
     {
+        $book = Book::where('bk_id', $bk_id)->firstOrFail();
         $book->update(['bk_approval' => 'reject']);
         return back()->with('success', 'Request rejected.');
     }

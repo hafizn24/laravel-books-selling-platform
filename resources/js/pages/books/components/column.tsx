@@ -25,12 +25,96 @@ export const columns: ColumnDef<Book>[] = [
         header: "Title",
         cell: ({ row }) => <div>{row.getValue("bk_title")}</div>,
     },
-    { accessorKey: "ct_title", header: "Category" },
-    { accessorKey: "bk_description", header: "Description" },
-    { accessorKey: "bk_price", header: "Price" },
-    { accessorKey: "bk_stock", header: "Stock" },
-    { accessorKey: "name", header: "Seller Name" },
-    { accessorKey: "bk_approval", header: "Approval Status" },
+    {
+        accessorKey: "ct_title",
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+            >
+                Category <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => {
+            const ct_title = new String(row.getValue("ct_title"));
+            return <div>{ct_title.toString()}</div>;
+        },
+    },
+    {
+        accessorKey: "bk_description",
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+            >
+                Description <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => {
+            const bk_description = new String(row.getValue("bk_description"));
+            return <div>{bk_description.toString()}</div>;
+        },
+    },
+    {
+        accessorKey: "bk_price",
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+            >
+                Price <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => {
+            const bk_price = new String(row.getValue("bk_price"));
+            return <div>{bk_price.toString()}</div>;
+        },
+    },
+    {
+        accessorKey: "bk_stock",
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+            >
+                Stock <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => {
+            const bk_stock = new String(row.getValue("bk_stock"));
+            return <div>{bk_stock.toString()}</div>;
+        },
+    },
+    {
+        accessorKey: "name",
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+            >
+                Seller's Name <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => {
+            const name = new String(row.getValue("name"));
+            return <div>{name.toString()}</div>;
+        },
+    },
+    {
+        accessorKey: "bk_approval",
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+            >
+                Approval Status <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => {
+            const bk_approval = new String(row.getValue("bk_approval"));
+            return <div>{bk_approval.toString()}</div>;
+        },
+    },
     {
         accessorKey: "bk_created_at",
         header: ({ column }) => (
@@ -68,11 +152,81 @@ export const columns: ColumnDef<Book>[] = [
 ];
 
 export const pendingColumns: ColumnDef<Book>[] = [
-    { accessorKey: "bk_title", header: "Title" },
-    { accessorKey: "ct_title", header: "Category" },
-    { accessorKey: "bk_price", header: "Price" },
-    { accessorKey: "bk_stock", header: "Stock" },
-    { accessorKey: "name", header: "Seller Name" },
+    {
+        accessorKey: "bk_title",
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+            >
+                Title <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => {
+            const title = new String(row.getValue("bk_title"));
+            return <div>{title.toString()}</div>;
+        },
+    },
+    {
+        accessorKey: "ct_title",
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+            >
+                Category <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => {
+            const ct_title = new String(row.getValue("ct_title"));
+            return <div>{ct_title.toString()}</div>;
+        },
+    },
+    {
+        accessorKey: "bk_price",
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+            >
+                Price <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => {
+            const bk_price = new String(row.getValue("bk_price"));
+            return <div>{bk_price.toString()}</div>;
+        },
+    },
+    {
+        accessorKey: "bk_stock",
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+            >
+                Stock <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => {
+            const bk_stock = new String(row.getValue("bk_stock"));
+            return <div>{bk_stock.toString()}</div>;
+        },
+    },
+    {
+        accessorKey: "name",
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+            >
+                Seller's Name <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ row }) => {
+            const name = new String(row.getValue("name"));
+            return <div>{name.toString()}</div>;
+        },
+    },
     {
         accessorKey: "bk_created_at",
         header: ({ column }) => (
@@ -103,8 +257,8 @@ export const pendingColumns: ColumnDef<Book>[] = [
                         <BookDetailModal book={book} />
                         <DropdownMenuSeparator />
                         <DropdownMenuItem
-                            onClick={() =>
-                                router.put(`/books/${book.bk_id}/approve`, {}, {
+                            onClick={() => 
+                                router.put(`/books/approve/${book.bk_id}`, {}, {
                                     preserveScroll: true,
                                     onSuccess: () => toast.success("Request approved"),
                                 })
@@ -114,7 +268,7 @@ export const pendingColumns: ColumnDef<Book>[] = [
                         </DropdownMenuItem>
                         <DropdownMenuItem
                             onClick={() =>
-                                router.put(`/books/${book.bk_id}/reject`, {}, {
+                                router.put(`/books/reject/${book.bk_id}`, {}, {
                                     preserveScroll: true,
                                     onSuccess: () => toast.success("Request cancelled"),
                                 })

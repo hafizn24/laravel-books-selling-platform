@@ -20,14 +20,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('books', [BookController::class, 'create'])->name('books');
         Route::post('books', [BookController::class, 'store'])->name('books.store');
         Route::get('books/list', [BookController::class, 'list'])->name('books.list');
-        Route::get('books/{book:slug}', [BookController::class, 'show']);
+        Route::get('books/details/{book:slug}', [BookController::class, 'show']);
     });
 
     // Admin-only routes
     Route::middleware(['role:admin'])->group(function () {
         Route::get('books/pending-approval', [BookController::class, 'index'])->name('books.pending-approval');
-        Route::put('books/{book}/approve', [BookController::class, 'approve'])->name('books.approve');
-        Route::put('books/{book}/reject', [BookController::class, 'reject'])->name('books.reject');
+        Route::put('books/approve/{bk_id}', [BookController::class, 'approve'])->name('books.approve');
+        Route::put('books/reject/{bk_id}', [BookController::class, 'reject'])->name('books.reject');
 
         Route::get('category', [CategoryController::class, 'list'])->name('category');
         Route::post('category', [CategoryController::class, 'createCategory'])->name('category.create');

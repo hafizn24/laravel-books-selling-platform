@@ -50,7 +50,6 @@ export default function Create() {
                                         autoComplete="title"
                                         name="bk_title"
                                         placeholder="Book title"
-                                        value="Testing purpose"
                                     />
                                     <InputError message={errors.title} className="mt-2" />
                                 </div>
@@ -83,7 +82,6 @@ export default function Create() {
                                         name="bk_description"
                                         placeholder="Brief description of the book"
                                         rows={4}
-                                        value="Testing purpose"
                                     />
                                     <InputError message={errors.description} />
                                 </div>
@@ -98,7 +96,6 @@ export default function Create() {
                                         autoComplete="price"
                                         name="bk_price"
                                         placeholder="e.g. 10.00"
-                                        value="10"
                                     />
                                     <InputError message={errors.price} />
                                 </div>
@@ -114,7 +111,6 @@ export default function Create() {
                                         name="bk_stock"
                                         placeholder="e.g. 50"
                                         min="0"
-                                        value="50"
                                     />
                                     <InputError message={errors.stock} />
                                 </div>
